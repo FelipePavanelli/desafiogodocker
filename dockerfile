@@ -1,11 +1,15 @@
 FROM golang:1.17 AS builder
 
-WORKDIR /app
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN go build main.go
 
 FROM scratch
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY --from=builder /app .
+COPY --from=builder /usr/src/app .
 
-CMD ["go", "run", "main.go"]
+CMD ["./main"]
